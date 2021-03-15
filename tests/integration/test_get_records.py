@@ -10,4 +10,4 @@ def test_get_record():
 def test_get_missing_record():
     response = requests.get(BASE+"/job/"+str(10))
     assert response.status_code == 404
-    assert response.json() == {"message":"The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."}
+    assert response.json() == {"message":"Could not find that id"}
