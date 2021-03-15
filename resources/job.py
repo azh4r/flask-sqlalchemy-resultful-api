@@ -62,16 +62,17 @@ class JobResource(Resource):
 
     
 
-# class JobPostResource(Resource):
-#     # POST is to create a new resource, whether it already exists or not.
-#     # the URL will not contain the resource id
-#     def post(self):
-#         try:
-#             job = job_schema.load(request.json, partial=True)
+class JobPostResource(Resource):
+    # POST is to create a new resource, whether it already exists or not.
+    # the URL will not contain the resource id
+    def post(self):
+        try:
+            job = job_schema.load(request.form, partial=True)
+            print('loaded')
+        except ValidationError as err:
+            print(err.messages)
+            abort(404,err.messages)
 
-#         except ValidationError as err:
-#             print(err.messages)
-#             abort(404,err.messages)
-#         db.session.add(job)
-#         db.session.commit
-#         return job_schema.dump(job), 201
+        db.session.add(job)
+        db.session.commit()
+        return job_schema.dump(job), 201
