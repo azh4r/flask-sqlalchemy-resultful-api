@@ -14,17 +14,7 @@ class JobResource(Resource):
             abort(404, description="Could not find that id")
         return job_schema.dump(job),200
 
-    # POST is to create a new resource, whether it already exists or not.
-    # the URL will not contain the resource id
-    def post(self):
-        try:
-            job = job_schema.load(request.form, partial=True)
-        except ValidationError as err:
-            print(err.messages)
-            abort(404,err.messages)
-        db.session.add(job)
-        db.session.commit
-        return job_schema.dump(job), 201
+
 
     # Check if a resource exists.  If not create it.
     # In REST PUT can also be used to update an existing resource
@@ -72,3 +62,16 @@ class JobResource(Resource):
 
     
 
+# class JobPostResource(Resource):
+#     # POST is to create a new resource, whether it already exists or not.
+#     # the URL will not contain the resource id
+#     def post(self):
+#         try:
+#             job = job_schema.load(request.json, partial=True)
+
+#         except ValidationError as err:
+#             print(err.messages)
+#             abort(404,err.messages)
+#         db.session.add(job)
+#         db.session.commit
+#         return job_schema.dump(job), 201
